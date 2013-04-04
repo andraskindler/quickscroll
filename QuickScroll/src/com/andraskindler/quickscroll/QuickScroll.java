@@ -141,9 +141,11 @@ public class QuickScroll extends View {
 				}
 			});
 
-		final LayoutParams containerparams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		final RelativeLayout.LayoutParams containerparams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		final RelativeLayout container = new RelativeLayout(getContext());
 		container.setBackgroundColor(Color.TRANSPARENT);
+		containerparams.addRule(RelativeLayout.ALIGN_TOP, getId());
+		containerparams.addRule(RelativeLayout.ALIGN_BOTTOM, getId());
 		container.setLayoutParams(containerparams);
 
 		if (mType == TYPE_POPUP || mType == TYPE_POPUP_WITH_HANDLE) {
@@ -174,17 +176,16 @@ public class QuickScroll extends View {
 		getLayoutParams().width = (int) (30 * density);
 		mScrollIndicatorText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 32);
 
-		// setting up indicator and popup container
-		final RelativeLayout layout = new RelativeLayout(getContext());
-		final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		params.addRule(RelativeLayout.ALIGN_LEFT, getId());
-		params.addRule(RelativeLayout.ALIGN_TOP, getId());
-		params.addRule(RelativeLayout.ALIGN_RIGHT, getId());
-		params.addRule(RelativeLayout.ALIGN_BOTTOM, getId());
-		layout.setLayoutParams(params);
-
 		// scrollbar setup
 		if (style != STYLE_NONE) {
+			final RelativeLayout layout = new RelativeLayout(getContext());
+			final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+			params.addRule(RelativeLayout.ALIGN_LEFT, getId());
+			params.addRule(RelativeLayout.ALIGN_TOP, getId());
+			params.addRule(RelativeLayout.ALIGN_RIGHT, getId());
+			params.addRule(RelativeLayout.ALIGN_BOTTOM, getId());
+			layout.setLayoutParams(params);
+			
 			final View scrollbar = new View(getContext());
 			scrollbar.setBackgroundColor(GREY_SCROLLBAR);
 			final RelativeLayout.LayoutParams scrollbarparams = new RelativeLayout.LayoutParams(1, LayoutParams.MATCH_PARENT);
@@ -214,7 +215,6 @@ public class QuickScroll extends View {
 		mItemCount = mList.getAdapter().getCount();
 
 		if (mScrolling && event.getAction() == MotionEvent.ACTION_CANCEL) {
-			System.out.println("az");
 			if (mType == TYPE_POPUP || mType == TYPE_POPUP_WITH_HANDLE) {
 				if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 					mScrolling = false;
@@ -310,12 +310,13 @@ public class QuickScroll extends View {
 	@SuppressLint("NewApi")
 	private void scroll(final float height) {
 		if (mType == TYPE_INDICATOR || mType == TYPE_INDICATOR_WITH_HANDLE) {
-			float move = height - mScrollIndicator.getHeight() / 2;
+			float move = height - (mScrollIndicator.getHeight() / 2);
 
 			if (move < 0)
 				move = 0;
 			else if (move > getHeight() - mScrollIndicator.getHeight())
 				move = getHeight() - mScrollIndicator.getHeight();
+			
 			if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
 				mScrollIndicator.startAnimation(moveCompat(move));
 			else
