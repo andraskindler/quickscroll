@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/TextStyle"
+        android:layout_alignParentTop="true"
+        android:text="@string/text_page_1" />
+
+    <ExpandableListView
+        android:id="@+id/fragment_country_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_title"
+        android:layout_toLeftOf="@+id/quickscroll"
+        android:divider="#00000000"
+        android:drawSelectorOnTop="false"
+        android:groupIndicator="@null"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+
+    <com.andraskindler.quickscroll.QuickScroll
+        android:id="@+id/quickscroll"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_title" />
+
+</RelativeLayout>

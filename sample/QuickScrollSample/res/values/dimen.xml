@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_textview">10dp</dimen>
+    <dimen name="fontsize_textview">18dp</dimen>
+    <dimen name="size_divider">1px</dimen>
+</resources>
