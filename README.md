@@ -45,7 +45,7 @@ Usage
 
 	Both styles also come with a *_WITH_HANDLE* suffix, creating a holo-themed handlebar on the scrollbar.
 
-4. (Optional) Do some customizing: change the colors, sizes and font styles. This can be done via xml attributes or object methods.
+4. (Optional) Do some customizing: change the colors, sizes and font styles. This can be done via object methods.
 
 Including in your app
 =====================
