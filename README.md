@@ -23,7 +23,7 @@ Usage
         
         @Override
         public String getIndicatorForPosition(int childposition, int groupposition) {
-      return null;
+            return null;
         }
 
    The second function is responsible for is for implementing scroll behaviour. This can be used to perform special tasks, e.g. if you want to *snap* to the first item starting with a letter in an alphabetically ordered list or jump between groups in an ExpandableListView. If you want the normal approach, simply return *childposition*.
