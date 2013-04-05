@@ -52,16 +52,6 @@ Including in your app
 
 FastTrack is available as an Android Library Project. In Eclipse, you can include it by referencing as a library project.
 
-Maven users can reference it by moving the apklib into the local repo and creating a dependency:
-
-    <dependency>
-      <groupId>com.andraskindler</groupId>
-      <artifactId>quickscroll</artifactId>
-      <version>0.8.0-SNAPSHOT</version>
-      <type>apklib</type>
-    </dependency>
-
-
 Other notices
 =============
 
