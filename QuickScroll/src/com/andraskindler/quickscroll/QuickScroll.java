@@ -16,8 +16,8 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ExpandableListView;
@@ -185,7 +185,7 @@ public class QuickScroll extends View {
 			params.addRule(RelativeLayout.ALIGN_RIGHT, getId());
 			params.addRule(RelativeLayout.ALIGN_BOTTOM, getId());
 			layout.setLayoutParams(params);
-			
+
 			final View scrollbar = new View(getContext());
 			scrollbar.setBackgroundColor(GREY_SCROLLBAR);
 			final RelativeLayout.LayoutParams scrollbarparams = new RelativeLayout.LayoutParams(1, LayoutParams.MATCH_PARENT);
@@ -224,7 +224,8 @@ public class QuickScroll extends View {
 			} else {
 				if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 					mScrolling = false;
-					mScrollIndicator.setVisibility(View.GONE);
+					mScrollIndicator.findViewById(R.id.quickscroll_indicator_container_pin).setVisibility(View.INVISIBLE);
+					mScrollIndicatorText.setVisibility(View.INVISIBLE);
 				} else
 					mScrollIndicator.startAnimation(mFadeOut);
 			}
@@ -251,9 +252,10 @@ public class QuickScroll extends View {
 	private boolean IndicatorTouchEvent(final MotionEvent event) {
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-				mScrollIndicator.setVisibility(View.VISIBLE);
-			else
+			if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+				mScrollIndicator.findViewById(R.id.quickscroll_indicator_container_pin).setVisibility(View.VISIBLE);
+				mScrollIndicatorText.setVisibility(View.VISIBLE);
+			} else
 				mScrollIndicator.startAnimation(mFadeIn);
 			mScrollIndicator.setPadding(0, 0, getWidth(), 0);
 			scroll(event.getY());
@@ -264,8 +266,9 @@ public class QuickScroll extends View {
 			return true;
 		case MotionEvent.ACTION_UP:
 			if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-				mScrollIndicator.setVisibility(View.GONE);
 				mScrolling = false;
+				mScrollIndicator.findViewById(R.id.quickscroll_indicator_container_pin).setVisibility(View.INVISIBLE);
+				mScrollIndicatorText.setVisibility(View.INVISIBLE);
 			} else
 				mScrollIndicator.startAnimation(mFadeOut);
 
@@ -316,7 +319,7 @@ public class QuickScroll extends View {
 				move = 0;
 			else if (move > getHeight() - mScrollIndicator.getHeight())
 				move = getHeight() - mScrollIndicator.getHeight();
-			
+
 			if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
 				mScrollIndicator.startAnimation(moveCompat(move));
 			else
@@ -462,26 +465,50 @@ public class QuickScroll extends View {
 		mScrollIndicatorText.setEms(sizeEMS);
 	}
 
+	/**
+	 * Set the textsize of the TextView containing the indicatortext.
+	 * 
+	 * @param unit
+	 *            - use TypedValue statics
+	 * @param size
+	 *            - the size according to the selected unit
+	 */
+	public void setTextSize(final int unit, final float size) {
+		mScrollIndicatorText.setTextSize(unit, size);
+	}
+
+	/**
+	 * Set the colors of the handlebar.
+	 * 
+	 * @param inactive
+	 *            - color of the inactive handlebar
+	 * @param activebase
+	 *            - base color of the active handlebar
+	 * @param activestroke
+	 *            - stroke of the active handlebar
+	 */
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	public void setHandlebarColor(final int inactive, final int activebase, final int activestroke) {
-		final float density = getResources().getDisplayMetrics().density;
-		final GradientDrawable bg_inactive = new GradientDrawable();
-		bg_inactive.setCornerRadius(density);
-		bg_inactive.setColor(inactive);
-		bg_inactive.setStroke((int) (5 * density), Color.TRANSPARENT);
-		final GradientDrawable bg_active = new GradientDrawable();
-		bg_active.setCornerRadius(density);
-		bg_active.setColor(activebase);
-		bg_active.setStroke((int) (5 * density), activestroke);
-		final StateListDrawable states = new StateListDrawable();
-		states.addState(new int[] { android.R.attr.state_selected }, bg_active);
-		states.addState(new int[] { android.R.attr.state_enabled }, bg_inactive);
+		if (mType == TYPE_INDICATOR_WITH_HANDLE || mType == TYPE_POPUP_WITH_HANDLE) {
+			final float density = getResources().getDisplayMetrics().density;
+			final GradientDrawable bg_inactive = new GradientDrawable();
+			bg_inactive.setCornerRadius(density);
+			bg_inactive.setColor(inactive);
+			bg_inactive.setStroke((int) (5 * density), Color.TRANSPARENT);
+			final GradientDrawable bg_active = new GradientDrawable();
+			bg_active.setCornerRadius(density);
+			bg_active.setColor(activebase);
+			bg_active.setStroke((int) (5 * density), activestroke);
+			final StateListDrawable states = new StateListDrawable();
+			states.addState(new int[] { android.R.attr.state_selected }, bg_active);
+			states.addState(new int[] { android.R.attr.state_enabled }, bg_inactive);
 
-		if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-			mHandlebar.setBackgroundDrawable(states);
-		else
-			mHandlebar.setBackground(states);
+			if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+				mHandlebar.setBackgroundDrawable(states);
+			else
+				mHandlebar.setBackground(states);
+		}
 	}
 
 	private TranslateAnimation moveCompat(final float toYDelta) {
