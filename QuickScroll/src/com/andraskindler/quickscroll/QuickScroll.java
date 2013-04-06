@@ -126,21 +126,6 @@ public class QuickScroll extends View {
 			}
 		});
 
-		if (mType == TYPE_INDICATOR_WITH_HANDLE || mType == TYPE_POPUP_WITH_HANDLE)
-			mList.setOnScrollListener(new OnScrollListener() {
-
-				public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-				}
-
-				@SuppressLint("NewApi")
-				public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-					if (!mScrolling && totalItemCount - visibleItemCount > 0) {
-						moveHandlebar(getHeight() * firstVisibleItem / (totalItemCount - visibleItemCount));
-					}
-				}
-			});
-
 		final RelativeLayout.LayoutParams containerparams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		final RelativeLayout container = new RelativeLayout(getContext());
 		container.setBackgroundColor(Color.TRANSPARENT);
@@ -203,6 +188,20 @@ public class QuickScroll extends View {
 				mHandlebar.setLayoutParams(handleparams);
 				((RelativeLayout.LayoutParams) mHandlebar.getLayoutParams()).addRule(RelativeLayout.CENTER_HORIZONTAL);
 				layout.addView(mHandlebar);
+
+                mList.setOnScrollListener(new OnScrollListener() {
+
+                    public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                    }
+
+                    @SuppressLint("NewApi")
+                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                        if (!mScrolling && totalItemCount - visibleItemCount > 0) {
+                            moveHandlebar(getHeight() * firstVisibleItem / (totalItemCount - visibleItemCount));
+                        }
+                    }
+                });
 			}
 		}
 
@@ -355,7 +354,7 @@ public class QuickScroll extends View {
 		else if (move > getHeight() - mHandlebar.getHeight() - mScrollbarMargin)
 			move = getHeight() - mHandlebar.getHeight() - mScrollbarMargin;
 
-		if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
 			mHandlebar.startAnimation(moveCompat(move));
 		else
 			mHandlebar.setTranslationY(move);
@@ -397,9 +396,9 @@ public class QuickScroll extends View {
 	 * Sets the popup colors, when QuickScroll.TYPE_POPUP is selected as type.
 	 * <p>
 	 * 
-	 * @param background
+	 * @param backgroundcolor
 	 *            the background color of the TextView
-	 * @param border
+	 * @param bordercolor
 	 *            the background color of the border surrounding the TextView
 	 * @param textcolor
 	 *            the color of the text
