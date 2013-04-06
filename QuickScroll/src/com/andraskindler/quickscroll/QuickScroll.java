@@ -209,10 +209,11 @@ public class QuickScroll extends View {
 		((ViewGroup) mList.getParent()).addView(container);
 	}
 
-	// TODO: count == 0
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		mItemCount = mList.getAdapter().getCount();
+		if (mItemCount == 0)
+			return false;
 
 		if (mScrolling && event.getAction() == MotionEvent.ACTION_CANCEL) {
 			if (mType == TYPE_POPUP || mType == TYPE_POPUP_WITH_HANDLE) {
