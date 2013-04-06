@@ -23,7 +23,7 @@ Usage
         
         @Override
         public String getIndicatorForPosition(int childposition, int groupposition) {
-      return null;
+            return null;
         }
 
    The second function is responsible for is for implementing scroll behaviour. This can be used to perform special tasks, e.g. if you want to *snap* to the first item starting with a letter in an alphabetically ordered list or jump between groups in an ExpandableListView. If you want the normal approach, simply return *childposition*.
@@ -45,7 +45,7 @@ Usage
 
 	Both styles also come with a *_WITH_HANDLE* suffix, creating a holo-themed handlebar on the scrollbar.
 
-4. (Optional) Do some customizing: change the colors, sizes and font styles. This can be done via xml attributes or object methods.
+4. (Optional) Do some customizing: change the colors, sizes and font styles. This can be done via object methods.
 
 Including in your app
 =====================
