@@ -35,8 +35,8 @@ Usage
         
 3. Initialize the QuickScroll widget:
 	
-        final QuickScroll fasttrack = (QuickScroll) layout.findViewById(R.id.quickscroll);
-        fasttrack.init(QuickScroll.TYPE_INDICATOR, listview, adapter, QuickScroll.STYLE_HOLO);
+        final QuickScroll quickscroll = (QuickScroll) layout.findViewById(R.id.quickscroll);
+        quickscroll.init(QuickScroll.TYPE_INDICATOR, listview, adapter, QuickScroll.STYLE_HOLO);
 
 	The first parameter assigns the type, the second and third binds the ListView (or ExpandableListView) and its adapter. 
 	The last one defines the style, currently there are two available:
