@@ -8,22 +8,14 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
-import android.widget.AbsListView;
+import android.widget.*;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.ExpandableListView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 public class QuickScroll extends View {
 
@@ -32,36 +24,28 @@ public class QuickScroll extends View {
 	public static final int TYPE_INDICATOR = 1;
 	public static final int TYPE_POPUP_WITH_HANDLE = 2;
 	public static final int TYPE_INDICATOR_WITH_HANDLE = 3;
-
 	// style statics
 	public static final int STYLE_NONE = 0;
 	public static final int STYLE_HOLO = 1;
-
 	// base colors
 	public static final int GREY_DARK = Color.parseColor("#e0585858");
 	public static final int GREY_LIGHT = Color.parseColor("#f0888888");
 	public static final int GREY_SCROLLBAR = Color.parseColor("#64404040");
 	public static final int BLUE_LIGHT = Color.parseColor("#FF33B5E5");
 	public static final int BLUE_LIGHT_SEMITRANSPARENT = Color.parseColor("#8033B5E5");
-
+	private static final int mScrollbarMargin = 10;
 	// base variables
 	private boolean mScrolling;
-
 	private AlphaAnimation mFadeIn, mFadeOut;
 	private TextView mScrollIndicatorText;
 	private Scrollable mScrollable;
 	private ListView mList;
-
 	private int mGroupPosition;
 	private int mItemCount;
 	private long mFadeDuration;
-
 	private int mType;
-
 	// handlebar variables
 	private View mHandlebar;
-	private static final int mScrollbarMargin = 10;
-
 	// indicator variables
 	private RelativeLayout mScrollIndicator;
 
@@ -80,7 +64,7 @@ public class QuickScroll extends View {
 
 	/**
 	 * Initializing the QuickScroll, this function must be called.
-	 * <p>
+	 * <p/>
 	 * 
 	 * @param type
 	 *            the QuickScroll type. Available inputs: <b>QuickScroll.TYPE_POPUP</b> or <b>QuickScroll.TYPE_INDICATOR</b>
@@ -189,19 +173,19 @@ public class QuickScroll extends View {
 				((RelativeLayout.LayoutParams) mHandlebar.getLayoutParams()).addRule(RelativeLayout.CENTER_HORIZONTAL);
 				layout.addView(mHandlebar);
 
-                mList.setOnScrollListener(new OnScrollListener() {
+				mList.setOnScrollListener(new OnScrollListener() {
 
-                    public void onScrollStateChanged(AbsListView view, int scrollState) {
+					public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-                    }
+					}
 
-                    @SuppressLint("NewApi")
-                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                        if (!mScrolling && totalItemCount - visibleItemCount > 0) {
-                            moveHandlebar(getHeight() * firstVisibleItem / (totalItemCount - visibleItemCount));
-                        }
-                    }
-                });
+					@SuppressLint("NewApi")
+					public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+						if (!mScrolling && totalItemCount - visibleItemCount > 0) {
+							moveHandlebar(getHeight() * firstVisibleItem / (totalItemCount - visibleItemCount));
+						}
+					}
+				});
 			}
 		}
 
@@ -210,6 +194,8 @@ public class QuickScroll extends View {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+		if (mList.getAdapter() == null)
+			return false;
 		mItemCount = mList.getAdapter().getCount();
 		if (mItemCount == 0)
 			return false;
@@ -354,7 +340,7 @@ public class QuickScroll extends View {
 		else if (move > getHeight() - mHandlebar.getHeight() - mScrollbarMargin)
 			move = getHeight() - mHandlebar.getHeight() - mScrollbarMargin;
 
-        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+		if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
 			mHandlebar.startAnimation(moveCompat(move));
 		else
 			mHandlebar.setTranslationY(move);
@@ -362,7 +348,7 @@ public class QuickScroll extends View {
 
 	/**
 	 * Sets the fade in and fade out duration of the indicator; default is 150 ms.
-	 * <p>
+	 * <p/>
 	 * 
 	 * @param millis
 	 *            the fade duration in milliseconds
@@ -375,7 +361,7 @@ public class QuickScroll extends View {
 
 	/**
 	 * Sets the indicator colors, when QuickScroll.TYPE_INDICATOR is selected as type.
-	 * <p>
+	 * <p/>
 	 * 
 	 * @param background
 	 *            the background color of the square
@@ -394,7 +380,7 @@ public class QuickScroll extends View {
 
 	/**
 	 * Sets the popup colors, when QuickScroll.TYPE_POPUP is selected as type.
-	 * <p>
+	 * <p/>
 	 * 
 	 * @param backgroundcolor
 	 *            the background color of the TextView
@@ -422,7 +408,7 @@ public class QuickScroll extends View {
 
 	/**
 	 * Sets the width and height of the TextView containing the indicatortext. Default is WRAP_CONTENT, WRAP_CONTENT.
-	 * <p>
+	 * <p/>
 	 * 
 	 * @param widthDP
 	 *            width in DP
@@ -437,7 +423,7 @@ public class QuickScroll extends View {
 
 	/**
 	 * Sets the padding of the TextView containing the indicatortext. Default is 4 dp.
-	 * <p>
+	 * <p/>
 	 * 
 	 * @param paddingLeftDP
 	 *            left padding in DP
@@ -456,7 +442,7 @@ public class QuickScroll extends View {
 
 	/**
 	 * Turns on fixed size for the TextView containing the indicatortext. Do not use with setSize()! This mode looks good if the indicatortext length is fixed, e.g. it's always two characters long.
-	 * <p>
+	 * <p/>
 	 * 
 	 * @param sizeEMS
 	 *            number of characters in the indicatortext
