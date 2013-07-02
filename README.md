@@ -50,7 +50,7 @@ Usage
 Including in your app
 =====================
 
-FastTrack is available as an Android Library Project. In Eclipse, you can include it by referencing as a library project.
+QuickScroll is available as an Android Library Project. In Eclipse, you can include it by referencing as a library project.
 
 Other notices
 =============
