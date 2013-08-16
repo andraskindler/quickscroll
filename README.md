@@ -5,6 +5,9 @@ QuickScroll is a library aimed at creating similar scrolling experiences to the 
 
 QuickScroll works great with basically any third party library, in fact, it's just a lightveight View subclass with few lines of initialization code.
 
+![ScreenShot](http://howrobotswork.files.wordpress.com/2013/08/quickscroll_1_s.png)
+![ScreenShot](http://howrobotswork.files.wordpress.com/2013/08/quickscroll_2_s.png)
+![ScreenShot](http://howrobotswork.files.wordpress.com/2013/08/quickscroll_3_s.png)
 ![ScreenShot](http://howrobotswork.files.wordpress.com/2013/08/quickscroll_4_s.png)
 
 Usage
