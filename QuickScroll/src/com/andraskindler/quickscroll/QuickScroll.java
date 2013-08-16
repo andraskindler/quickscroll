@@ -19,6 +19,9 @@ import android.widget.AbsListView.OnScrollListener;
 
 public class QuickScroll extends View {
 
+    // IDs
+    private static final int ID_PIN = 512;
+    private static final int ID_PIN_TEXT = 513;
     // type statics
     public static final int TYPE_POPUP = 0;
     public static final int TYPE_INDICATOR = 1;
@@ -135,10 +138,10 @@ public class QuickScroll extends View {
 
             container.addView(mScrollIndicatorText);
         } else if (mType == TYPE_INDICATOR || mType == TYPE_INDICATOR_WITH_HANDLE) {
-            mScrollIndicator = (RelativeLayout) ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.indicator, null);
-            mScrollIndicatorText = (TextView) mScrollIndicator.findViewById(R.id.quickscroll_indicator_container_text);
+            mScrollIndicator = createPin();
+            mScrollIndicatorText = (TextView) mScrollIndicator.findViewById(ID_PIN_TEXT);
 
-            ((Pin) mScrollIndicator.findViewById(R.id.quickscroll_indicator_container_pin)).getLayoutParams().width = 25;
+            (mScrollIndicator.findViewById(ID_PIN)).getLayoutParams().width = 25;
 
             container.addView(mScrollIndicator);
         }
@@ -214,7 +217,7 @@ public class QuickScroll extends View {
             } else {
                 if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
                     mScrolling = false;
-                    mScrollIndicator.findViewById(R.id.quickscroll_indicator_container_pin).setVisibility(View.INVISIBLE);
+                    mScrollIndicator.findViewById(ID_PIN).setVisibility(View.INVISIBLE);
                     mScrollIndicatorText.setVisibility(View.INVISIBLE);
                 } else
                     mScrollIndicator.startAnimation(mFadeOut);
@@ -243,7 +246,7 @@ public class QuickScroll extends View {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-                    mScrollIndicator.findViewById(R.id.quickscroll_indicator_container_pin).setVisibility(View.VISIBLE);
+                    mScrollIndicator.findViewById(ID_PIN).setVisibility(View.VISIBLE);
                     mScrollIndicatorText.setVisibility(View.VISIBLE);
                 } else
                     mScrollIndicator.startAnimation(mFadeIn);
@@ -257,7 +260,7 @@ public class QuickScroll extends View {
             case MotionEvent.ACTION_UP:
                 if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
                     mScrolling = false;
-                    mScrollIndicator.findViewById(R.id.quickscroll_indicator_container_pin).setVisibility(View.INVISIBLE);
+                    mScrollIndicator.findViewById(ID_PIN).setVisibility(View.INVISIBLE);
                     mScrollIndicatorText.setVisibility(View.INVISIBLE);
                 } else
                     mScrollIndicator.startAnimation(mFadeOut);
@@ -372,7 +375,7 @@ public class QuickScroll extends View {
      */
     public void setIndicatorColor(final int background, final int tip, final int text) {
         if (mType == TYPE_INDICATOR || mType == TYPE_INDICATOR_WITH_HANDLE) {
-            ((Pin) mScrollIndicator.findViewById(R.id.quickscroll_indicator_container_pin)).setColor(tip);
+            ((Pin) mScrollIndicator.findViewById(ID_PIN)).setColor(tip);
             mScrollIndicatorText.setTextColor(text);
             mScrollIndicatorText.setBackgroundColor(background);
         }
@@ -489,6 +492,34 @@ public class QuickScroll extends View {
             mMoveCompatAnim.setDuration(0);
         }
         return mMoveCompatAnim;
+    }
+
+    private RelativeLayout createPin(){
+        final RelativeLayout pinLayout = new RelativeLayout(getContext());
+        pinLayout.setVisibility(View.INVISIBLE);
+
+        final Pin pin = new Pin(getContext());
+        pin.setId(ID_PIN);
+        final RelativeLayout.LayoutParams pinParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        pinParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        pinParams.addRule(RelativeLayout.ALIGN_BOTTOM, ID_PIN_TEXT);
+        pinParams.addRule(RelativeLayout.ALIGN_TOP, ID_PIN_TEXT);
+        pin.setLayoutParams(pinParams);
+        pinLayout.addView(pin);
+
+        final TextView indicatorTextView = new TextView(getContext());
+        indicatorTextView.setId(ID_PIN_TEXT);
+        final RelativeLayout.LayoutParams indicatorParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        indicatorParams.addRule(RelativeLayout.LEFT_OF, ID_PIN);
+        indicatorTextView.setLayoutParams(indicatorParams);
+        indicatorTextView.setTextColor(Color.WHITE);
+        indicatorTextView.setGravity(Gravity.CENTER);
+        indicatorTextView.setBackgroundColor(GREY_LIGHT);
+        pinLayout.addView(indicatorTextView);
+
+        System.out.println("working");
+
+        return pinLayout;
     }
 
 }
