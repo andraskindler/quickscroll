@@ -21,15 +21,10 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>android</groupId>
+			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>
 			<version>4.2.2_r2</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>annotations</artifactId>
-			<version>4.1.1.4</version>
 		</dependency>
 	</dependencies>
 
@@ -52,7 +47,7 @@
 				<artifactId>android-maven-plugin</artifactId>
 				<configuration>
 					<sdk>
-						<platform>8</platform>
+						<platform>17</platform>
 					</sdk>
 				</configuration>
 			</plugin>

@@ -43,13 +43,16 @@ public class QuickScroll extends View {
     private View mScrollbar;
     private int mGroupPosition;
     private int mItemCount;
-    private long mFadeDuration;
+    private long mFadeDuration = 150;
     private int mType;
     private boolean mInitialized = false;
+    private static final int mTextPadding = 4;
     // handlebar variables
     private View mHandlebar;
     // indicator variables
     private RelativeLayout mScrollIndicator;
+    // animations
+    private TranslateAnimation mMoveCompatAnim;
 
     // default constructors
     public QuickScroll(Context context) {
@@ -95,7 +98,6 @@ public class QuickScroll extends View {
                 mScrolling = false;
             }
         });
-        setFadeDuration(150);
         mScrolling = false;
 
         final float density = getResources().getDisplayMetrics().density;
@@ -129,7 +131,7 @@ public class QuickScroll extends View {
             mScrollIndicatorText.setLayoutParams(popupparams);
 
             setPopupColor(GREY_LIGHT, GREY_DARK, 1, Color.WHITE, 1);
-            setTextPadding(4, 4, 4, 4);
+            setTextPadding(mTextPadding, mTextPadding, mTextPadding, mTextPadding);
 
             container.addView(mScrollIndicatorText);
         } else if (mType == TYPE_INDICATOR || mType == TYPE_INDICATOR_WITH_HANDLE) {
@@ -481,11 +483,12 @@ public class QuickScroll extends View {
     }
 
     private TranslateAnimation moveCompat(final float toYDelta) {
-        final TranslateAnimation anim = new TranslateAnimation(0, 0, toYDelta, toYDelta);
-        anim.setFillAfter(true);
-        anim.setDuration(0);
-        return anim;
+        if (mMoveCompatAnim == null) {
+            mMoveCompatAnim = new TranslateAnimation(0, 0, toYDelta, toYDelta);
+            mMoveCompatAnim.setFillAfter(true);
+            mMoveCompatAnim.setDuration(0);
+        }
+        return mMoveCompatAnim;
     }
-
 
 }
