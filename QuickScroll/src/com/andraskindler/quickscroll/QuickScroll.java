@@ -517,8 +517,6 @@ public class QuickScroll extends View {
         indicatorTextView.setBackgroundColor(GREY_LIGHT);
         pinLayout.addView(indicatorTextView);
 
-        System.out.println("working");
-
         return pinLayout;
     }
 
