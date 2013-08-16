@@ -5,10 +5,7 @@ QuickScroll is a library aimed at creating similar scrolling experiences to the 
 
 QuickScroll works great with basically any third party library, in fact, it's just a lightveight View subclass with few lines of initialization code.
 
-![ScreenShot](http://howrobotswork.files.wordpress.com/2013/08/quickscroll_1_s.png)
-![ScreenShot](http://howrobotswork.files.wordpress.com/2013/08/quickscroll_2_s.png)
-![ScreenShot](http://howrobotswork.files.wordpress.com/2013/08/quickscroll_3_s.png)
-![ScreenShot](http://howrobotswork.files.wordpress.com/2013/08/quickscroll_4_s.png)
+<p align="center"><img src="http://howrobotswork.files.wordpress.com/2013/08/quickscroll_11.png"/></p>
 
 Usage
 =====
@@ -55,7 +52,9 @@ Usage
 Including in your app
 =====================
 
-QuickScroll is available as an Android Library Project. In Eclipse, you can include it by referencing as a library project.
+QuickScroll is available as an Android Library Project. In Eclipse, you can include it by referencing as a library project, in IntelliJ, you can add it as a module.
+
+<p align="center"><img src="http://howrobotswork.files.wordpress.com/2013/08/quickscroll_21.png"/></p>
 
 Other notices
 =============
