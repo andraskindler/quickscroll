@@ -3,7 +3,9 @@ About QuickScroll
 
 QuickScroll is a library aimed at creating similar scrolling experiences to the native Contacts app's People view. It has the same scrolling capabilities as the ListView's native *fastscroll*, but comes with a much a much more customizable design, two indicator styles and an allways visible scrollbar. The two most common modes are *popup* and *indicator*. Works seamlessly with ListView and ExpandableListView.
 
-QuickScroll works great with basically any third party library, in fact, it's just a lightveight View subclass with few lines of initialization code.
+QuickScroll works great with basically any third party library, in fact, it's just a lightveight View subclass with few lines of initialization code. For more info check out this <a href="http://howrobotswork.wordpress.com/2013/08/28/quickscroll-a-customizable-always-visible-scrollbar-for-listview-and-expandablelistview/" target="blank_">blog post</a>.
+
+<p align="center"><img src="http://howrobotswork.files.wordpress.com/2013/08/quickscroll_11.png"/></p>
 
 Usage
 =====
@@ -50,7 +52,9 @@ Usage
 Including in your app
 =====================
 
-QuickScroll is available as an Android Library Project. In Eclipse, you can include it by referencing as a library project.
+QuickScroll is available as an Android Library Project. In Eclipse, you can include it by referencing as a library project, in IntelliJ, you can add it as a module.
+
+<p align="center"><img src="http://howrobotswork.files.wordpress.com/2013/08/quickscroll_21.png"/></p>
 
 Other notices
 =============
