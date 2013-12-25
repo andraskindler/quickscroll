@@ -158,14 +158,14 @@ public class QuickScroll extends View {
             params.addRule(RelativeLayout.ALIGN_BOTTOM, getId());
             layout.setLayoutParams(params);
 
-            final View scrollBar = new View(getContext());
-            scrollBar.setBackgroundColor(GREY_SCROLLBAR);
+            final View scrollbar = new View(getContext());
+            scrollbar.setBackgroundColor(GREY_SCROLLBAR);
             final RelativeLayout.LayoutParams scrollbarparams = new RelativeLayout.LayoutParams(1, LayoutParams.MATCH_PARENT);
             scrollbarparams.addRule(RelativeLayout.CENTER_HORIZONTAL);
             scrollbarparams.topMargin = mScrollbarMargin;
             scrollbarparams.bottomMargin = mScrollbarMargin;
-            scrollBar.setLayoutParams(scrollbarparams);
-            layout.addView(scrollBar);
+            scrollbar.setLayoutParams(scrollbarparams);
+            layout.addView(scrollbar);
             ((ViewGroup) mList.getParent()).addView(layout);
             // creating the handlebar
             if (mType == TYPE_INDICATOR_WITH_HANDLE || mType == TYPE_POPUP_WITH_HANDLE) {
@@ -233,6 +233,7 @@ public class QuickScroll extends View {
                 mScrollIndicator.startAnimation(mFadeIn);
                 mScrollIndicator.setPadding(0, 0, getWidth(), 0);
                 scroll(event.getY());
+                mScrolling = true;
                 return true;
             case MotionEvent.ACTION_MOVE:
                 scroll(event.getY());
@@ -252,6 +253,7 @@ public class QuickScroll extends View {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 mScrollIndicatorText.startAnimation(mFadeIn);
+                mScrolling = true;
                 scroll(event.getY());
                 return true;
             case MotionEvent.ACTION_MOVE:
@@ -308,6 +310,7 @@ public class QuickScroll extends View {
             move = mScrollbarMargin;
         else if (move > getHeight() - mHandlebar.getHeight() - mScrollbarMargin)
             move = getHeight() - mHandlebar.getHeight() - mScrollbarMargin;
+
         mHandlebar.setTranslationY(move);
     }
 
