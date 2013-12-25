@@ -246,19 +246,19 @@ public class QuickScroll extends View {
             moveHandlebar(height - (handleBar.getHeight() / 2));
         }
 
-        int postition = (int) ((height / getHeight()) * itemCount);
+        int position = (int) ((height / getHeight()) * itemCount);
         if (listView instanceof ExpandableListView) {
-            final int grouppos = ExpandableListView.getPackedPositionGroup(((ExpandableListView) listView).getExpandableListPosition(postition));
-            if (grouppos != -1)
-                groupPosition = grouppos;
+            final int groupPosition = ExpandableListView.getPackedPositionGroup(((ExpandableListView) listView).getExpandableListPosition(position));
+            if (groupPosition != -1)
+                this.groupPosition = groupPosition;
         }
 
-        if (postition < 0)
-            postition = 0;
-        else if (postition >= itemCount)
-            postition = itemCount - 1;
-        scrollIndicatorTextView.setText(scrollable.getIndicatorForPosition(postition, groupPosition));
-        listView.setSelection(scrollable.getScrollPosition(postition, groupPosition));
+        if (position < 0)
+            position = 0;
+        else if (position >= itemCount)
+            position = itemCount - 1;
+        scrollIndicatorTextView.setText(scrollable.getIndicatorForPosition(position, groupPosition));
+        listView.setSelection(scrollable.getScrollPosition(position, groupPosition));
     }
 
     @SuppressLint("NewApi")
@@ -307,8 +307,6 @@ public class QuickScroll extends View {
      * @param bordercolor     the background color of the border surrounding the TextView
      * @param textcolor       the color of the text
      */
-    @SuppressWarnings("deprecation")
-    @SuppressLint("NewApi")
     public void setPopupColor(final int backgroundcolor, final int bordercolor, final int borderwidthDPI, final int textcolor, float cornerradiusDPI) {
 
         final GradientDrawable popupbackground = new GradientDrawable();
@@ -379,8 +377,6 @@ public class QuickScroll extends View {
      * @param activebase   - base color of the active handlebar
      * @param activestroke - stroke of the active handlebar
      */
-    @SuppressWarnings("deprecation")
-    @SuppressLint("NewApi")
     public void setHandlebarColor(final int inactive, final int activebase, final int activestroke) {
         if (type == TYPE_INDICATOR_WITH_HANDLE || type == TYPE_POPUP_WITH_HANDLE) {
             final float density = getResources().getDisplayMetrics().density;
