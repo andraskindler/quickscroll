@@ -79,7 +79,7 @@ public class QuickScroll extends View {
     public void init(final int type, final ListView list, final Scrollable scrollable, final int style) {
         if (isInitialized) return;
 
-        Toast.makeText(getContext(), "changed: 5", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "changed: 8", Toast.LENGTH_SHORT).show();
 
         this.type = type;
         listView = list;
@@ -114,32 +114,26 @@ public class QuickScroll extends View {
 
         final RelativeLayout.LayoutParams containerParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         final RelativeLayout container = new RelativeLayout(getContext());
-        container.setBackgroundColor(Color.YELLOW);
+        container.setBackgroundColor(Color.TRANSPARENT);
         containerParams.addRule(RelativeLayout.ALIGN_TOP, getId());
         containerParams.addRule(RelativeLayout.ALIGN_BOTTOM, getId());
         container.setLayoutParams(containerParams);
 
         if (this.type == TYPE_POPUP || this.type == TYPE_POPUP_WITH_HANDLE) {
-
             scrollIndicatorTextView = new TextView(getContext());
             scrollIndicatorTextView.setTextColor(Color.WHITE);
             scrollIndicatorTextView.setVisibility(View.INVISIBLE);
             scrollIndicatorTextView.setGravity(Gravity.CENTER);
-            final RelativeLayout.LayoutParams popupparams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-
-            popupparams.addRule(RelativeLayout.CENTER_IN_PARENT);
-            scrollIndicatorTextView.setLayoutParams(popupparams);
-
+            final RelativeLayout.LayoutParams popupParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+            popupParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+            scrollIndicatorTextView.setLayoutParams(popupParams);
             setPopupColor(GREY_LIGHT, GREY_DARK, 1, Color.WHITE, 1);
             setTextPadding(TEXT_PADDING, TEXT_PADDING, TEXT_PADDING, TEXT_PADDING);
-
             container.addView(scrollIndicatorTextView);
-        } else if (this.type == TYPE_INDICATOR || this.type == TYPE_INDICATOR_WITH_HANDLE) {
+        } else {
             scrollIndicator = createPin();
             scrollIndicatorTextView = (TextView) scrollIndicator.findViewById(ID_PIN_TEXT);
-
             (scrollIndicator.findViewById(ID_PIN)).getLayoutParams().width = 25;
-
             container.addView(scrollIndicator);
         }
 
@@ -171,15 +165,14 @@ public class QuickScroll extends View {
             if (this.type == TYPE_INDICATOR_WITH_HANDLE || this.type == TYPE_POPUP_WITH_HANDLE) {
                 handleBar = new View(getContext());
                 setHandlebarColor(BLUE_LIGHT, BLUE_LIGHT, BLUE_LIGHT_SEMITRANSPARENT);
-                final RelativeLayout.LayoutParams handleparams = new RelativeLayout.LayoutParams((int) (12 * density), (int) (36 * density));
-                handleBar.setLayoutParams(handleparams);
+                final RelativeLayout.LayoutParams handleParams = new RelativeLayout.LayoutParams((int) (12 * density), (int) (36 * density));
+                handleBar.setLayoutParams(handleParams);
                 ((RelativeLayout.LayoutParams) handleBar.getLayoutParams()).addRule(RelativeLayout.CENTER_HORIZONTAL);
                 layout.addView(handleBar);
 
                 listView.setOnScrollListener(new OnScrollListener() {
 
                     public void onScrollStateChanged(AbsListView view, int scrollState) {
-
                     }
 
                     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -203,7 +196,6 @@ public class QuickScroll extends View {
         itemCount = listView.getAdapter().getCount();
         if (itemCount == 0)
             return false;
-
         if (event.getActionMasked() == MotionEvent.ACTION_CANCEL) {
             if (type == TYPE_POPUP || type == TYPE_INDICATOR) {
                 scrollIndicatorTextView.startAnimation(fadeOutAnimation);
@@ -213,26 +205,13 @@ public class QuickScroll extends View {
                 scrollIndicator.startAnimation(fadeOutAnimation);
             }
         }
-
-        switch (type) {
-            case TYPE_POPUP:
-            case TYPE_POPUP_WITH_HANDLE:
-                return PopupTouchEvent(event);
-            case TYPE_INDICATOR:
-            case TYPE_INDICATOR_WITH_HANDLE:
-                return IndicatorTouchEvent(event);
-            default:
-                break;
-        }
-        return false;
-    }
-
-    protected boolean IndicatorTouchEvent(final MotionEvent event) {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                scrollIndicator.startAnimation(fadeInAnimation);
-                scrollIndicator.setPadding(0, 0, getWidth(), 0);
-                scroll(event.getY());
+                if (type == TYPE_INDICATOR || type == TYPE_INDICATOR_WITH_HANDLE) {
+                    scrollIndicator.startAnimation(fadeInAnimation);
+                    scrollIndicator.setPadding(0, 0, getWidth(), 0);
+                } else
+                    scrollIndicatorTextView.startAnimation(fadeInAnimation); scroll(event.getY());
                 isScrolling = true;
                 return true;
             case MotionEvent.ACTION_MOVE:
@@ -241,33 +220,14 @@ public class QuickScroll extends View {
             case MotionEvent.ACTION_UP:
                 if (type == TYPE_INDICATOR_WITH_HANDLE || type == TYPE_POPUP_WITH_HANDLE)
                     handleBar.setSelected(false);
-                scrollIndicator.startAnimation(fadeOutAnimation);
+                if (type == TYPE_INDICATOR || type == TYPE_INDICATOR_WITH_HANDLE)
+                    scrollIndicator.startAnimation(fadeOutAnimation);
+                else
+                    scrollIndicatorTextView.startAnimation(fadeOutAnimation);
                 return true;
             default:
-                break;
+                return false;
         }
-        return false;
-    }
-
-    protected boolean PopupTouchEvent(final MotionEvent event) {
-        switch (event.getActionMasked()) {
-            case MotionEvent.ACTION_DOWN:
-                scrollIndicatorTextView.startAnimation(fadeInAnimation);
-                isScrolling = true;
-                scroll(event.getY());
-                return true;
-            case MotionEvent.ACTION_MOVE:
-                scroll(event.getY());
-                return true;
-            case MotionEvent.ACTION_UP:
-                if (type == TYPE_INDICATOR_WITH_HANDLE || type == TYPE_POPUP_WITH_HANDLE)
-                    handleBar.setSelected(false);
-                scrollIndicatorTextView.startAnimation(fadeOutAnimation);
-                return true;
-            default:
-                break;
-        }
-        return false;
     }
 
     @SuppressLint("NewApi")
