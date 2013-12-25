@@ -79,7 +79,7 @@ public class QuickScroll extends View {
     public void init(final int type, final ListView list, final Scrollable scrollable, final int style) {
         if (isInitialized) return;
 
-        Toast.makeText(getContext(), "changed: 3", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "changed: 5", Toast.LENGTH_SHORT).show();
 
         this.type = type;
         listView = list;
@@ -103,10 +103,7 @@ public class QuickScroll extends View {
         });
         isScrolling = false;
 
-        final float density = getResources().getDisplayMetrics().density;
-
         listView.setOnTouchListener(new OnTouchListener() {
-
             public boolean onTouch(View v, MotionEvent event) {
                 if (isScrolling && (event.getAction() == MotionEvent.ACTION_MOVE || event.getAction() == MotionEvent.ACTION_DOWN)) {
                     return true;
@@ -115,12 +112,12 @@ public class QuickScroll extends View {
             }
         });
 
-        final RelativeLayout.LayoutParams containerparams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        final RelativeLayout.LayoutParams containerParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         final RelativeLayout container = new RelativeLayout(getContext());
-        container.setBackgroundColor(Color.TRANSPARENT);
-        containerparams.addRule(RelativeLayout.ALIGN_TOP, getId());
-        containerparams.addRule(RelativeLayout.ALIGN_BOTTOM, getId());
-        container.setLayoutParams(containerparams);
+        container.setBackgroundColor(Color.YELLOW);
+        containerParams.addRule(RelativeLayout.ALIGN_TOP, getId());
+        containerParams.addRule(RelativeLayout.ALIGN_BOTTOM, getId());
+        container.setLayoutParams(containerParams);
 
         if (this.type == TYPE_POPUP || this.type == TYPE_POPUP_WITH_HANDLE) {
 
@@ -147,6 +144,7 @@ public class QuickScroll extends View {
         }
 
         // setting scrollbar width
+        final float density = getResources().getDisplayMetrics().density;
         getLayoutParams().width = (int) (30 * density);
         scrollIndicatorTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 32);
 
@@ -207,7 +205,7 @@ public class QuickScroll extends View {
             return false;
 
         if (event.getActionMasked() == MotionEvent.ACTION_CANCEL) {
-            if (type == TYPE_POPUP || type == TYPE_POPUP_WITH_HANDLE) {
+            if (type == TYPE_POPUP || type == TYPE_INDICATOR) {
                 scrollIndicatorTextView.startAnimation(fadeOutAnimation);
             } else {
                 if (type == TYPE_INDICATOR_WITH_HANDLE || type == TYPE_POPUP_WITH_HANDLE)
@@ -472,4 +470,5 @@ public class QuickScroll extends View {
 
         return pinLayout;
     }
+
 }
