@@ -31,8 +31,9 @@
     <com.andraskindler.quickscroll.QuickScroll
         android:id="@+id/quickscroll"
         android:layout_width="wrap_content"
+        android:layout_alignTop="@id/android:list"
+        android:layout_alignBaseline="@id/android:list"
         android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/tv_title" />
+        android:layout_alignParentRight="true"/>
 
 </RelativeLayout>

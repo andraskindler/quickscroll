@@ -79,7 +79,7 @@ public class QuickScroll extends View {
     public void init(final int type, final ListView list, final Scrollable scrollable, final int style) {
         if (isInitialized) return;
 
-        Toast.makeText(getContext(), "changed: 8", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "changed: 9", Toast.LENGTH_SHORT).show();
 
         this.type = type;
         listView = list;
@@ -154,13 +154,13 @@ public class QuickScroll extends View {
 
             final View scrollbar = new View(getContext());
             scrollbar.setBackgroundColor(GREY_SCROLLBAR);
-            final RelativeLayout.LayoutParams scrollbarparams = new RelativeLayout.LayoutParams(1, LayoutParams.MATCH_PARENT);
-            scrollbarparams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            scrollbarparams.topMargin = SCROLLBAR_MARGIN;
-            scrollbarparams.bottomMargin = SCROLLBAR_MARGIN;
-            scrollbar.setLayoutParams(scrollbarparams);
+            final RelativeLayout.LayoutParams scrollBarParams = new RelativeLayout.LayoutParams(1, LayoutParams.MATCH_PARENT);
+            scrollBarParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            scrollBarParams.topMargin = SCROLLBAR_MARGIN;
+            scrollBarParams.bottomMargin = SCROLLBAR_MARGIN;
+            scrollbar.setLayoutParams(scrollBarParams);
             layout.addView(scrollbar);
-            ((ViewGroup) listView.getParent()).addView(layout);
+            ViewGroup.class.cast(listView.getParent()).addView(layout);
             // creating the handlebar
             if (this.type == TYPE_INDICATOR_WITH_HANDLE || this.type == TYPE_POPUP_WITH_HANDLE) {
                 handleBar = new View(getContext());
@@ -186,7 +186,7 @@ public class QuickScroll extends View {
 
         isInitialized = true;
 
-        ((ViewGroup) listView.getParent()).addView(container);
+        ViewGroup.class.cast(listView.getParent()).addView(container);
     }
 
     @Override
