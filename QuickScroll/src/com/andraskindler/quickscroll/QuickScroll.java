@@ -16,7 +16,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-import android.view.animation.TranslateAnimation;
 import android.widget.*;
 import android.widget.AbsListView.OnScrollListener;
 
@@ -46,10 +45,8 @@ public class QuickScroll extends View {
     private TextView mScrollIndicatorText;
     private Scrollable mScrollable;
     private ListView mList;
-    private View mScrollbar;
     private int mGroupPosition;
     private int mItemCount;
-    private long mFadeDuration = 150;
     private int mType;
     private boolean mInitialized = false;
     private static final int mTextPadding = 4;
@@ -57,8 +54,6 @@ public class QuickScroll extends View {
     private View mHandlebar;
     // indicator variables
     private RelativeLayout mScrollIndicator;
-    // animations
-    private TranslateAnimation mMoveCompatAnim;
 
     // default constructors
     public QuickScroll(Context context) {
@@ -163,14 +158,14 @@ public class QuickScroll extends View {
             params.addRule(RelativeLayout.ALIGN_BOTTOM, getId());
             layout.setLayoutParams(params);
 
-            mScrollbar = new View(getContext());
-            mScrollbar.setBackgroundColor(GREY_SCROLLBAR);
+            final View scrollBar = new View(getContext());
+            scrollBar.setBackgroundColor(GREY_SCROLLBAR);
             final RelativeLayout.LayoutParams scrollbarparams = new RelativeLayout.LayoutParams(1, LayoutParams.MATCH_PARENT);
             scrollbarparams.addRule(RelativeLayout.CENTER_HORIZONTAL);
             scrollbarparams.topMargin = mScrollbarMargin;
             scrollbarparams.bottomMargin = mScrollbarMargin;
-            mScrollbar.setLayoutParams(scrollbarparams);
-            layout.addView(mScrollbar);
+            scrollBar.setLayoutParams(scrollbarparams);
+            layout.addView(scrollBar);
             ((ViewGroup) mList.getParent()).addView(layout);
             // creating the handlebar
             if (mType == TYPE_INDICATOR_WITH_HANDLE || mType == TYPE_POPUP_WITH_HANDLE) {
@@ -187,7 +182,6 @@ public class QuickScroll extends View {
 
                     }
 
-                    @SuppressLint("NewApi")
                     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                         if (!mScrolling && totalItemCount - visibleItemCount > 0) {
                             moveHandlebar(getHeight() * firstVisibleItem / (totalItemCount - visibleItemCount));
@@ -212,30 +206,19 @@ public class QuickScroll extends View {
 
         if (event.getActionMasked() == MotionEvent.ACTION_CANCEL) {
             if (mType == TYPE_POPUP || mType == TYPE_POPUP_WITH_HANDLE) {
-                if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-                    mScrolling = false;
-                    mScrollIndicatorText.setVisibility(View.GONE);
-                } else
-                    mScrollIndicatorText.startAnimation(mFadeOut);
+                mScrollIndicatorText.startAnimation(mFadeOut);
             } else {
                 if (mType == TYPE_INDICATOR_WITH_HANDLE || mType == TYPE_POPUP_WITH_HANDLE)
                     mHandlebar.setSelected(false);
-
-                if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-                    mScrolling = false;
-                    toggleVisibilityCompat(true);
-                } else
-                    mScrollIndicator.startAnimation(mFadeOut);
+                mScrollIndicator.startAnimation(mFadeOut);
             }
         }
 
         switch (mType) {
             case TYPE_POPUP:
-                return PopupTouchEvent(event);
             case TYPE_POPUP_WITH_HANDLE:
                 return PopupTouchEvent(event);
             case TYPE_INDICATOR:
-                return IndicatorTouchEvent(event);
             case TYPE_INDICATOR_WITH_HANDLE:
                 return IndicatorTouchEvent(event);
             default:
@@ -244,19 +227,12 @@ public class QuickScroll extends View {
         return false;
     }
 
-    @SuppressLint("NewApi")
     private boolean IndicatorTouchEvent(final MotionEvent event) {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-                    //mScrollIndicator.findViewById(ID_PIN).setVisibility(View.VISIBLE);
-                    //mScrollIndicatorText.setVisibility(View.VISIBLE);
-                    toggleVisibilityCompat(false);
-                } else
-                    mScrollIndicator.startAnimation(mFadeIn);
+                mScrollIndicator.startAnimation(mFadeIn);
                 mScrollIndicator.setPadding(0, 0, getWidth(), 0);
                 scroll(event.getY());
-                mScrolling = true;
                 return true;
             case MotionEvent.ACTION_MOVE:
                 scroll(event.getY());
@@ -264,12 +240,7 @@ public class QuickScroll extends View {
             case MotionEvent.ACTION_UP:
                 if (mType == TYPE_INDICATOR_WITH_HANDLE || mType == TYPE_POPUP_WITH_HANDLE)
                     mHandlebar.setSelected(false);
-
-                if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-                    mScrolling = false;
-                    toggleVisibilityCompat(true);
-                } else
-                    mScrollIndicator.startAnimation(mFadeOut);
+                mScrollIndicator.startAnimation(mFadeOut);
                 return true;
             default:
                 break;
@@ -280,12 +251,7 @@ public class QuickScroll extends View {
     private boolean PopupTouchEvent(final MotionEvent event) {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-                    //mScrollIndicatorText.setVisibility(View.VISIBLE);
-                    toggleVisibilityCompat(false);
-                else
-                    mScrollIndicatorText.startAnimation(mFadeIn);
-                mScrolling = true;
+                mScrollIndicatorText.startAnimation(mFadeIn);
                 scroll(event.getY());
                 return true;
             case MotionEvent.ACTION_MOVE:
@@ -294,12 +260,7 @@ public class QuickScroll extends View {
             case MotionEvent.ACTION_UP:
                 if (mType == TYPE_INDICATOR_WITH_HANDLE || mType == TYPE_POPUP_WITH_HANDLE)
                     mHandlebar.setSelected(false);
-
-                if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-                    mScrolling = false;
-                    toggleVisibilityCompat(true);
-                } else
-                    mScrollIndicatorText.startAnimation(mFadeOut);
+                mScrollIndicatorText.startAnimation(mFadeOut);
                 return true;
             default:
                 break;
@@ -317,10 +278,7 @@ public class QuickScroll extends View {
             else if (move > getHeight() - mScrollIndicator.getHeight())
                 move = getHeight() - mScrollIndicator.getHeight();
 
-            if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-                mScrollIndicator.startAnimation(moveCompat(move));
-            else
-                mScrollIndicator.setTranslationY(move);
+            mScrollIndicator.setTranslationY(move);
         }
 
         if (mType == TYPE_INDICATOR_WITH_HANDLE || mType == TYPE_POPUP_WITH_HANDLE) {
@@ -350,11 +308,7 @@ public class QuickScroll extends View {
             move = mScrollbarMargin;
         else if (move > getHeight() - mHandlebar.getHeight() - mScrollbarMargin)
             move = getHeight() - mHandlebar.getHeight() - mScrollbarMargin;
-
-        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-            mHandlebar.startAnimation(moveCompat(move));
-        else
-            mHandlebar.setTranslationY(move);
+        mHandlebar.setTranslationY(move);
     }
 
     /**
@@ -364,9 +318,8 @@ public class QuickScroll extends View {
      * @param millis the fade duration in milliseconds
      */
     public void setFadeDuration(long millis) {
-        mFadeDuration = millis;
-        mFadeIn.setDuration(mFadeDuration);
-        mFadeOut.setDuration(mFadeDuration);
+        mFadeIn.setDuration(millis);
+        mFadeOut.setDuration(millis);
     }
 
     /**
@@ -486,33 +439,6 @@ public class QuickScroll extends View {
                 mHandlebar.setBackgroundDrawable(states);
             else
                 mHandlebar.setBackground(states);
-        }
-    }
-
-    private TranslateAnimation moveCompat(final float toYDelta) {
-        mMoveCompatAnim = new TranslateAnimation(0, 0, toYDelta, toYDelta);
-        mMoveCompatAnim.setFillAfter(true);
-        mMoveCompatAnim.setDuration(0);
-        return mMoveCompatAnim;
-    }
-
-    private void hideIndicatorCompat() {
-        if (mScrollIndicatorText != null) {
-            mScrollIndicatorText.setVisibility(View.INVISIBLE);
-            mScrollIndicatorText.startAnimation(mFadeOut);
-        }
-        if (mScrollIndicator != null) {
-            mScrollIndicator.findViewById(ID_PIN).setVisibility(View.INVISIBLE);
-            mScrollIndicator.startAnimation(mFadeOut);
-        }
-    }
-
-    private void toggleVisibilityCompat(final boolean visible) {
-        if (mScrollIndicatorText != null) {
-            mScrollIndicatorText.startAnimation(visible ? mFadeOut : mFadeIn);
-        }
-        if (mScrollIndicator != null) {
-            mScrollIndicator.startAnimation(visible ? mFadeOut : mFadeIn);
         }
     }
 
