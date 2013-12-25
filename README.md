@@ -59,7 +59,7 @@ QuickScroll is available as an Android Library Project. In Eclipse, you can incl
 Other notices
 =============
 
-The lowest supported API level is 8 (FroYo)
+The lowest supported API level is 11 (Honeycomb)
 
 Developed by **Andras Kindler** (andraskindler@gmail.com)
 
