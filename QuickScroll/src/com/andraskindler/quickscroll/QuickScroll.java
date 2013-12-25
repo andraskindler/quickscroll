@@ -79,8 +79,6 @@ public class QuickScroll extends View {
     public void init(final int type, final ListView list, final Scrollable scrollable, final int style) {
         if (isInitialized) return;
 
-        Toast.makeText(getContext(), "changed: 9", Toast.LENGTH_SHORT).show();
-
         this.type = type;
         listView = list;
         this.scrollable = scrollable;
