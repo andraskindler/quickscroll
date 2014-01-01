@@ -4,20 +4,43 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.andraskindler</groupId>
 	<artifactId>quickscroll</artifactId>
-	<version>0.8.0</version>
-	<packaging>apklib</packaging>
-	<name>quickscroll</name>
+	<version>0.9.0</version>
+	<packaging>jar</packaging>
 
-	<developers>
-		<developer>
-			<name>Andras Kindler</name>
-			<email>andraskindler@gmail.com</email>
-			<url>https://github.com/andraskindler</url>
-			<roles>
-				<role>developer</role>
-			</roles>
-		</developer>
-	</developers>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
+    <name>QuickScroll</name>
+    <description>Bringing extended scrolling features to Android's native ListView and ExpandableListView.</description>
+    <url>https://github.com/andraskindler/quickscroll</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <access.token />
+        <client.id />
+    </properties>
+
+    <scm>
+        <url>https://github.com/andraskindler/quickscroll</url>
+        <connection>scm:git:https://github.com/andraskindler/quickscroll.git</connection>
+        <developerConnection>scm:git:git@github.com:andraskindler/quickscroll.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/andraskindler/quickscroll/issues</url>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>Apache 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 
 	<dependencies>
 		<dependency>
@@ -53,4 +76,12 @@
 			</plugin>
 		</plugins>
 	</build>
+
+    <developers>
+        <developer>
+            <name>Andras Kindler</name>
+            <email>andraskindler@gmail.com</email>
+            <url>https://github.com/andraskindler</url>
+        </developer>
+    </developers>
 </project>
