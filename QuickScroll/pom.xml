@@ -65,7 +65,7 @@
                             <goal>perform</goal>
                         </goals>
                         <configuration>
-                            <pomFileName>QuickScroll/target/checkout/pom.xml</pomFileName>
+                            <pomFileName>target/checkout/pom.xml</pomFileName>
                         </configuration>
                     </execution>
                 </executions>
