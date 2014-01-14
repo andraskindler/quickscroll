@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/TextStyle"
+        android:layout_alignParentTop="true"
+        android:text="@string/text_page_2" />
+
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_title"
+        android:layout_toLeftOf="@+id/quickscroll"
+        android:divider="#000000"
+        android:dividerHeight="@dimen/size_divider"
+        android:drawSelectorOnTop="false"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+
+    <TextView
+        android:id="@id/android:empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/no_data" />
+
+    <com.andraskindler.quickscroll.QuickScroll
+        android:id="@+id/quickscroll"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_title" />
+
+</RelativeLayout>

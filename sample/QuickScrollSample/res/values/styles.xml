@@ -1,0 +1,16 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="TextStyle" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:padding">@dimen/padding_textview</item>
+        <item name="android:textSize">@dimen/fontsize_textview</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">#0000</item>
+    </style>
+</resources>

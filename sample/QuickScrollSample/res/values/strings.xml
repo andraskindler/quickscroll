@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">QuickScroll demo</string>
+    <string name="no_data">no data</string>
+    <string name="text_page_0">This is a basic QuickScroll widget, using TYPE_INDICATOR_WITH_HANDLE and STYLE_HOLO flags with a ListView. The indicator has a fixed size of 1 ems.</string>
+    <string name="text_page_1">This is a basic QuickScroll widget with TYPE_POPUP and STYLE_HOLO flags with an ExpandableListView.</string>
+    <string name="text_page_2">This fragment shows QuickScroll usage with a wrapped indicator, custom indicator and handle colors.</string>
+    <string name="text_page_3">Here I use a custom background for the scrolling track (STYLE_NONE) and custom popup colors.</string>
+    <string name="text_page_4">For more information visit: https://github.com/andraskindler/quickscroll.</string>
+
+</resources>
