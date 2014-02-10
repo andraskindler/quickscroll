@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tv_title"
-        android:layout_toLeftOf="@+id/quickscroll"
         android:divider="#000000"
         android:dividerHeight="@dimen/size_divider"
         android:drawSelectorOnTop="false"
