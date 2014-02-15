@@ -18,16 +18,16 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <platform.version>4.2.2_r2</platform.version>
+        <platform.version>4.4.2_r2</platform.version>
         <android.plugin.version>3.6.0</android.plugin.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.google.android</groupId>
+            <groupId>android</groupId>
             <artifactId>android</artifactId>
-            <version>${platform.version}</version>
             <scope>provided</scope>
+            <version>${platform.version}</version>
         </dependency>
         <dependency>
             <groupId>com.andraskindler.quickscroll</groupId>
@@ -35,9 +35,9 @@
             <version>0.9.8</version>
         </dependency>
         <dependency>
-            <groupId>com.google.android.support</groupId>
-            <artifactId>support-v4</artifactId>
-            <version>13.0.0</version>
+            <groupId>android.support</groupId>
+            <artifactId>compatibility-v4</artifactId>
+            <version>19.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
