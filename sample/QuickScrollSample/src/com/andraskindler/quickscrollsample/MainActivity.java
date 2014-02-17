@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.ViewGroup;
 
-import com.andraskindler.quickscrollsample.adapter.FastTrackPagerAdapter;
+import com.andraskindler.quickscrollsample.adapter.QuickScrollPagerAdapter;
 import com.andraskindler.quickscrollsample.fragment.ContactListFragment;
 import com.andraskindler.quickscrollsample.fragment.CountryFragment;
 import com.andraskindler.quickscrollsample.fragment.EventListFragment;
@@ -21,7 +21,7 @@ public class MainActivity extends FragmentActivity {
 
 		final ViewPager pager = (ViewPager) layout.findViewById(R.id.main_pager);
 
-		final FastTrackPagerAdapter adapter = new FastTrackPagerAdapter(getSupportFragmentManager(), this);
+		final QuickScrollPagerAdapter adapter = new QuickScrollPagerAdapter(getSupportFragmentManager(), this);
 		adapter.addPage("base_popup_holo_nohandle", ContactListFragment.class, null);
 		adapter.addPage("expandable_indicator_holo_nohandle", CountryFragment.class, null);
 		adapter.addPage("base_indicator_holo_handle", EventListFragment.class, null);
