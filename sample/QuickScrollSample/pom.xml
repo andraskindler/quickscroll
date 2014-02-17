@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.andraskindler.quickscroll</groupId>
             <artifactId>quickscroll</artifactId>
-            <version>0.9.8</version>
+            <version>0.9.9-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>android.support</groupId>
@@ -42,7 +42,8 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>14.0.1</version>
+            <scope>compile</scope>
+            <version>16.0.1</version>
         </dependency>
     </dependencies>
     <build>
