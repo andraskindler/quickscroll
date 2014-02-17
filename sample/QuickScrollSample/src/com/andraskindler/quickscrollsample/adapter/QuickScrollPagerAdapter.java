@@ -9,19 +9,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class FastTrackPagerAdapter extends FragmentPagerAdapter {
+public class QuickScrollPagerAdapter extends FragmentPagerAdapter {
 	
 	private List<FragmentInfo> mPages;
 	private Context mContext;
 
-	public FastTrackPagerAdapter(FragmentManager fm) {
+	public QuickScrollPagerAdapter(FragmentManager fm) {
 		super(fm);
 	}
 
-	public FastTrackPagerAdapter(FragmentManager fm, Context context) {
+	public QuickScrollPagerAdapter(FragmentManager fm, Context context) {
 		super(fm);
 		mContext = context;
-		mPages = new ArrayList<FastTrackPagerAdapter.FragmentInfo>();
+		mPages = new ArrayList<QuickScrollPagerAdapter.FragmentInfo>();
 	}
 
 	protected static final class FragmentInfo {
