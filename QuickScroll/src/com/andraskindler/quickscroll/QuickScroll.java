@@ -238,7 +238,8 @@ public class QuickScroll extends View {
             else if (move > getHeight() - scrollIndicator.getHeight())
                 move = getHeight() - scrollIndicator.getHeight();
 
-            scrollIndicator.setTranslationY(move);
+            // scrollIndicator.setTranslationY(move);
+            ViewHelper.setTranslationY(scrollIndicator, move);
         }
 
         if (type == TYPE_INDICATOR_WITH_HANDLE || type == TYPE_POPUP_WITH_HANDLE) {
@@ -269,7 +270,8 @@ public class QuickScroll extends View {
         else if (move > getHeight() - handleBar.getHeight() - SCROLLBAR_MARGIN)
             move = getHeight() - handleBar.getHeight() - SCROLLBAR_MARGIN;
 
-        handleBar.setTranslationY(move);
+        // handleBar.setTranslationY(move);
+        ViewHelper.setTranslationY(handleBar, move);
     }
 
     /**
