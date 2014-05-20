@@ -189,9 +189,16 @@ public class QuickScroll extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (listView.getAdapter() == null)
+        Adapter adapter = listView.getAdapter();
+
+        if (adapter == null)
             return false;
-        itemCount = listView.getAdapter().getCount();
+
+        if (adapter instanceof HeaderViewListAdapter) {
+            adapter = ((HeaderViewListAdapter) adapter).getWrappedAdapter();
+        }
+
+        itemCount = adapter.getCount();
         if (itemCount == 0)
             return false;
         if (event.getActionMasked() == MotionEvent.ACTION_CANCEL) {
