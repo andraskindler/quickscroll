@@ -15,7 +15,7 @@ Usage
 1. Include the widget in your layout. Currently, you can only put it to the right side of the ListView, this can be done via a RelativeLayout, a LinearLayout or any other positioning trick of your choice. The default width is 30 dp, but if you really want to change it, you can do it via an object method.
 
         <com.andraskindler.quickscroll.QuickScroll
-        android:id="@+id/quickscroll
+        android:id="@+id/quickscroll"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"/>
 
