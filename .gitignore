@@ -34,3 +34,7 @@ proguard-project.txt
 tmp
 project.properties
 *.properties
+
+# Gradle files
+.gradle/
+build/
